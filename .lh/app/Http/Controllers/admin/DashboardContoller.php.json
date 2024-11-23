@@ -1,0 +1,34 @@
+{
+    "sourceFile": "app/Http/Controllers/Admin/DashboardContoller.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1726912244757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726912251115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n use Illuminate\\Http\\Request;\n \n class DashboardContoller extends Controller\n {\n-    public function\n+    public function dashboard\n }\n"
+                },
+                {
+                    "date": 1726912260790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,8 @@\n use Illuminate\\Http\\Request;\n \n class DashboardContoller extends Controller\n {\n-    public function dashboard\n+    public function dashboard(){\n+        return view()\n+    }\n }\n"
+                },
+                {
+                    "date": 1726912277326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class DashboardContoller extends Controller\n {\n     public function dashboard(){\n-        return view()\n+        return view('admin.dashboaed')\n     }\n }\n"
+                },
+                {
+                    "date": 1726912285214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class DashboardContoller extends Controller\n {\n     public function dashboard(){\n-        return view('admin.dashboaed')\n+        return view('admin.dashboard');\n     }\n }\n"
+                }
+            ],
+            "date": 1726912244757,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\Admin;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass DashboardContoller extends Controller\n{\n    public function\n}\n"
+        }
+    ]
+}

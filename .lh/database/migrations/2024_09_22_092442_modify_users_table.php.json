@@ -1,0 +1,118 @@
+{
+    "sourceFile": "database/migrations/2024_09_22_092442_modify_users_table.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 25,
+            "patches": [
+                {
+                    "date": 1726997123922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726997130237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table\n+            $table->string\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997136723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string\n+            $table->string('password')\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997143186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+<?php\n+\n+use Illuminate\\Database\\Migrations\\Migration;\n+use Illuminate\\Database\\Schema\\Blueprint;\n+use Illuminate\\Support\\Facades\\Schema;\n+\n+return new class extends Migration\n+{\n+    /**\n+     * Run the migrations.\n+     */\n+    public function up(): void\n+    {\n+        Schema::table('users', function (Blueprint $table) {\n+            $table->string('password')->after\n+        });\n+    }\n+\n+    /**\n+     * Reverse the migrations.\n+     */\n+    public function down(): void\n+    {\n+        Schema::table('users', function (Blueprint $table) {\n+            //\n+        });\n+    }\n+};\n"
+                },
+                {
+                    "date": 1726997149999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')->after\n+            $table->string('password')->after('email')-\n         });\n     }\n \n     /**\n@@ -25,32 +25,4 @@\n             //\n         });\n     }\n };\n-<?php\n-\n-use Illuminate\\Database\\Migrations\\Migration;\n-use Illuminate\\Database\\Schema\\Blueprint;\n-use Illuminate\\Support\\Facades\\Schema;\n-\n-return new class extends Migration\n-{\n-    /**\n-     * Run the migrations.\n-     */\n-    public function up(): void\n-    {\n-        Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')\n-        });\n-    }\n-\n-    /**\n-     * Reverse the migrations.\n-     */\n-    public function down(): void\n-    {\n-        Schema::table('users', function (Blueprint $table) {\n-            //\n-        });\n-    }\n-};\n"
+                },
+                {
+                    "date": 1726997155146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')->after('email')-\n+            $table->string('password')->after('email')->nullable\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997172637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')->after('email')->nullable\n+           able->string('password' $t)->after('email')->nullable();\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997180786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-           able->string('password' $t)->after('email')->nullable();\n+            $table->string('password')->after('email')->nullable();\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997190983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            //\n+            $table->drop('password')->\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997197437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->drop('password')->\n+            $table->dropColumn('password')->\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997221931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,7 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->dropColumn('password')->\n-        });\n+            $table->dropColumn('password')});\n     }\n };\n"
+                },
+                {
+                    "date": 1726997228580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')->after('email')->nullable();\n+            $table->string('password')->after('email')->nullable()\n         });\n     }\n \n     /**\n@@ -21,7 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->dropColumn('password')});\n+            //\n+        });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997243831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            //\n+            $table\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997251230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table\n+            $table->dropColumn\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997256337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->dropColumn\n+            $table->dropColumn('password')\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997269956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,10 @@\n      */\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->string('password')->after('email')->nullable()\n+            $table->string('password')->after('email')->nullable();\n+            \n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997284859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            \n+            $table->\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997291296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            $table->\n+            $table->rememberTocken\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997303402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            $table->rememberTocken\n+            $table->rememberToken()\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997317720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            $table->rememberToken()\n+            $table->rememberToken()->after\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997322999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            $table->rememberToken()->after\n+            $table->rememberToken()->after('password')\n         });\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1726997334281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     public function up(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->string('password')->after('email')->nullable();\n-            $table->rememberToken()->after('password')\n+            $table->rememberToken()->after('password');\n         });\n     }\n \n     /**\n@@ -22,8 +22,8 @@\n      */\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n-            $table->dropColumn('password')\n+            $table->dropColumn('password');\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997367563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,7 +23,8 @@\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->dropColumn('password');\n+            $table->dropColumn()\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997377392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->dropColumn('password');\n-            $table->dropColumn()\n+            $table->drop            $table->rememberToken()->after('password');\n+            ();\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997383451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,8 @@\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->dropColumn('password');\n-            $table->drop            $table->rememberToken()->after('password');\n-            ();\n+            $table->drop();\n         });\n     }\n };\n"
+                },
+                {
+                    "date": 1726997396283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,8 @@\n     public function down(): void\n     {\n         Schema::table('users', function (Blueprint $table) {\n             $table->dropColumn('password');\n-            $table->drop();\n+            $table->dropRememberToken();\n         });\n     }\n };\n"
+                }
+            ],
+            "date": 1726997123922,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration\n{\n    /**\n     * Run the migrations.\n     */\n    public function up(): void\n    {\n        Schema::table('users', function (Blueprint $table) {\n            $table\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     */\n    public function down(): void\n    {\n        Schema::table('users', function (Blueprint $table) {\n            //\n        });\n    }\n};\n"
+        }
+    ]
+}

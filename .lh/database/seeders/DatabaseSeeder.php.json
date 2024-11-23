@@ -1,0 +1,38 @@
+{
+    "sourceFile": "database/seeders/DatabaseSeeder.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1727000043065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727000058448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,12 +11,7 @@\n      * Seed the application's database.\n      */\n     public function run()\n     {\n-        // \\App\\Models\\User::factory(10)->create();\n-\n-        // \\App\\Models\\User::factory()->create([\n-        //     'name' => 'Test User',\n-        //     'email' => 'test@example.com',\n-        // ]);\n+        $this->\n     }\n }\n"
+                },
+                {
+                    "date": 1727000063937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n      * Seed the application's database.\n      */\n     public function run()\n     {\n-        $this->\n+        $this->call()\n     }\n }\n"
+                },
+                {
+                    "date": 1727000075249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n      * Seed the application's database.\n      */\n     public function run()\n     {\n-        $this->call()\n+        $this->call(User)\n     }\n }\n"
+                },
+                {
+                    "date": 1727000081271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n      * Seed the application's database.\n      */\n     public function run()\n     {\n-        $this->call(User)\n+        $this->call(UserTableSeed)\n     }\n }\n"
+                },
+                {
+                    "date": 1727000090233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n      * Seed the application's database.\n      */\n     public function run()\n     {\n-        $this->call(UserTableSeed)\n+        $this->call(UserTableSeeder::class)\n     }\n }\n"
+                }
+            ],
+            "date": 1727000043065,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Seeders;\n\n// use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\nuse Illuminate\\Database\\Seeder;\n\nclass DatabaseSeeder extends Seeder\n{\n    /**\n     * Seed the application's database.\n     */\n    public function run()\n    {\n        // \\App\\Models\\User::factory(10)->create();\n\n        // \\App\\Models\\User::factory()->create([\n        //     'name' => 'Test User',\n        //     'email' => 'test@example.com',\n        // ]);\n    }\n}\n"
+        }
+    ]
+}

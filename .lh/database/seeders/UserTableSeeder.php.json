@@ -1,0 +1,94 @@
+{
+    "sourceFile": "database/seeders/UserTableSeeder.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 19,
+            "patches": [
+                {
+                    "date": 1726999778177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726999788546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n namespace Database\\Seeders;\n \n use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\n use Illuminate\\Database\\Seeder;\n-use\n+use App\\Model\n \n class UserTableSeeder extends Seeder\n {\n     /**\n"
+                },
+                {
+                    "date": 1726999794165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n namespace Database\\Seeders;\n \n use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\n use Illuminate\\Database\\Seeder;\n-use App\\Model\n+use App\\Models\\\n \n class UserTableSeeder extends Seeder\n {\n     /**\n"
+                },
+                {
+                    "date": 1726999808661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n namespace Database\\Seeders;\n \n use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\n use Illuminate\\Database\\Seeder;\n-use App\\Models\\\n+use App\\Models\\User;\n \n class UserTableSeeder extends Seeder\n {\n     /**\n      * Run the database seeds.\n      */\n     public function run(): void\n     {\n-        //\n+       User\n     }\n }\n"
+                },
+                {
+                    "date": 1726999815636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,7 +12,7 @@\n      * Run the database seeds.\n      */\n     public function run(): void\n     {\n-       User\n+       User::crate\n     }\n }\n"
+                },
+                {
+                    "date": 1726999826912,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,7 +12,7 @@\n      * Run the database seeds.\n      */\n     public function run(): void\n     {\n-       User::crate\n+       User::create()\n     }\n }\n"
+                },
+                {
+                    "date": 1726999904837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,7 +12,9 @@\n      * Run the database seeds.\n      */\n     public function run(): void\n     {\n-       User::create()\n+       User::create([\n+        ''\n+       ])\n     }\n }\n"
+                },
+                {
+                    "date": 1726999910441,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,8 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        ''\n+        'email'\n        ])\n     }\n }\n"
+                },
+                {
+                    "date": 1726999916349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,8 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'email'\n+        'email'=>\n        ])\n     }\n }\n"
+                },
+                {
+                    "date": 1726999922012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,8 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'email'=>\n+        'email'=>'gisel'\n        ])\n     }\n }\n"
+                },
+                {
+                    "date": 1726999927383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,8 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'email'=>'gisel'\n+        'email'=>'giselAdmin'\n        ])\n     }\n }\n"
+                },
+                {
+                    "date": 1726999944284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'email'=>'giselAdmin'\n+        'email'=>'giselAdmin@gmial.com',\n+        \n        ])\n     }\n }\n"
+                },
+                {
+                    "date": 1727000026115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,8 @@\n     public function run(): void\n     {\n        User::create([\n         'email'=>'giselAdmin@gmial.com',\n-        \n-       ])\n+\n+       ]);\n     }\n }\n"
+                },
+                {
+                    "date": 1727000182899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n      */\n     public function run(): void\n     {\n        User::create([\n+        'name'\n         'email'=>'giselAdmin@gmial.com',\n \n        ]);\n     }\n"
+                },
+                {
+                    "date": 1727000188426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'name'\n+        'name'=>\n         'email'=>'giselAdmin@gmial.com',\n \n        ]);\n     }\n"
+                },
+                {
+                    "date": 1727000195048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'name'=>\n+        'name'=>'giseloverseas'\n         'email'=>'giselAdmin@gmial.com',\n \n        ]);\n     }\n"
+                },
+                {
+                    "date": 1727000224354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,11 @@\n      */\n     public function run(): void\n     {\n        User::create([\n-        'name'=>'giseloverseas'\n+        'name'=>'giseloverseas',\n         'email'=>'giselAdmin@gmial.com',\n+        'password'\n \n        ]);\n     }\n }\n"
+                },
+                {
+                    "date": 1727000230080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     {\n        User::create([\n         'name'=>'giseloverseas',\n         'email'=>'giselAdmin@gmial.com',\n-        'password'\n+        'password'=>''\n \n        ]);\n     }\n }\n"
+                },
+                {
+                    "date": 1727000235889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     {\n        User::create([\n         'name'=>'giseloverseas',\n         'email'=>'giselAdmin@gmial.com',\n-        'password'=>''\n+        'password'=>'123456'\n \n        ]);\n     }\n }\n"
+                },
+                {
+                    "date": 1727002897241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n     public function run(): void\n     {\n        User::create([\n         'name'=>'giseloverseas',\n-        'email'=>'giselAdmin@gmial.com',\n-        'password'=>'123456'\n+        'email'=>'giseladmin@gmial.com',\n+        'password'=>'123456',\n \n        ]);\n     }\n }\n"
+                }
+            ],
+            "date": 1726999778177,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Seeders;\n\nuse Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\nuse Illuminate\\Database\\Seeder;\nuse\n\nclass UserTableSeeder extends Seeder\n{\n    /**\n     * Run the database seeds.\n     */\n    public function run(): void\n    {\n        //\n    }\n}\n"
+        }
+    ]
+}

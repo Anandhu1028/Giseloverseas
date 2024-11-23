@@ -1,0 +1,338 @@
+{
+    "sourceFile": "app/Http/Controllers/Admin/GalleryController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 80,
+            "patches": [
+                {
+                    "date": 1726909258978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726910571645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,23 @@\n     }\n     public function create(){\n         return view('admin.gallery.create');\n     }\n+\n+    public function store_data(Request $request)\n+    {\n+        $awards = new Awards();\n+        $awards->headline = $request->headline;\n+        $awards->description = $request->description;\n+        if ($request->file('img'))\n+         {\n+            $image = $request->file('img');\n+            $imageName = time().'.'.$image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+\n+            // You can also store the image path in your database if needed\n+             $awards -> img = '/images/'.$imageName;\n+        }\n+        $awards->save();\n+        return redirect(route('awards'));\n+    }\n }\n"
+                },
+                {
+                    "date": 1726910705754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     public function create(){\n         return view('admin.gallery.create');\n     }\n \n-    public function store_data(Request $request)\n+    public function store(Request $request)\n     {\n         $awards = new Awards();\n         $awards->headline = $request->headline;\n         $awards->description = $request->description;\n"
+                },
+                {
+                    "date": 1726910715870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     }\n \n     public function store(Request $request)\n     {\n-        $awards = new Awards();\n+        $awards = new Gallery();\n         $awards->headline = $request->headline;\n         $awards->description = $request->description;\n         if ($request->file('img'))\n          {\n"
+                },
+                {
+                    "date": 1726910724267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     }\n \n     public function store(Request $request)\n     {\n-        $awards = new Gallery();\n-        $awards->headline = $request->headline;\n+        $gallery = new Gallery();\n+        $gallery->headline = $request->headline;\n         $awards->description = $request->description;\n         if ($request->file('img'))\n          {\n             $image = $request->file('img');\n"
+                },
+                {
+                    "date": 1726910742943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,17 +17,17 @@\n     public function store(Request $request)\n     {\n         $gallery = new Gallery();\n         $gallery->headline = $request->headline;\n-        $awards->description = $request->description;\n+        $gallery->description = $request->description;\n         if ($request->file('img'))\n          {\n             $image = $request->file('img');\n             $imageName = time().'.'.$image->getClientOriginalExtension();\n             $image->move(public_path('images'), $imageName);\n \n             // You can also store the image path in your database if needed\n-             $awards -> img = '/images/'.$imageName;\n+             $gallery -> img = '/images/'.$imageName;\n         }\n         $awards->save();\n         return redirect(route('awards'));\n     }\n"
+                },
+                {
+                    "date": 1726911720050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,34 +1,11 @@\n <?php\n \n-namespace App\\Http\\Controllers\\admin;\n+namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-    public function index(){\n-        return view('admin.gallery.index');\n-    }\n-    public function create(){\n-        return view('admin.gallery.create');\n-    }\n-\n-    public function store(Request $request)\n-    {\n-        $gallery = new Gallery();\n-        $gallery->headline = $request->headline;\n-        $gallery->description = $request->description;\n-        if ($request->file('img'))\n-         {\n-            $image = $request->file('img');\n-            $imageName = time().'.'.$image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n-\n-            // You can also store the image path in your database if needed\n-             $gallery -> img = '/images/'.$imageName;\n-        }\n-        $awards->save();\n-        return redirect(route('awards'));\n-    }\n+   pu\n }\n"
+                },
+                {
+                    "date": 1726911742041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-   pu\n+   public function index\n }\n"
+                },
+                {
+                    "date": 1726911794942,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,10 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-   public function index\n+   public function index(){\n+    $awards = Awards::all();\n+        return view('admin.awards.index',['awards'=>$awards]);\n+    }\n+   }\n }\n"
+                },
+                {
+                    "date": 1726911801800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class GalleryController extends Controller\n {\n    public function index(){\n-    $awards = Awards::all();\n+    $awards = Gallery::all();\n         return view('admin.awards.index',['awards'=>$awards]);\n     }\n    }\n }\n"
+                },
+                {
+                    "date": 1726911840121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class GalleryController extends Controller\n {\n    public function index(){\n-    $awards = Gallery::all();\n+    $gallery = Gallery::all();\n         return view('admin.awards.index',['awards'=>$awards]);\n     }\n    }\n }\n"
+                },
+                {
+                    "date": 1726911847129,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,8 @@\n class GalleryController extends Controller\n {\n    public function index(){\n     $gallery = Gallery::all();\n-        return view('admin.awards.index',['awards'=>$awards]);\n+        return view('admin.awards.index',['gallery'=>$awards]);\n     }\n    }\n }\n"
+                },
+                {
+                    "date": 1726911852897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,8 @@\n class GalleryController extends Controller\n {\n    public function index(){\n     $gallery = Gallery::all();\n-        return view('admin.awards.index',['gallery'=>$awards]);\n+        return view('admin.gallery.index',['gallery'=>$gallery]);\n     }\n    }\n }\n"
+                },
+                {
+                    "date": 1726911860331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n     $gallery = Gallery::all();\n         return view('admin.gallery.index',['gallery'=>$gallery]);\n     }\n    }\n-}\n+\n"
+                },
+                {
+                    "date": 1726912006311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,10 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-   public function index(){\n+   public function index()\n+   {\n     $gallery = Gallery::all();\n         return view('admin.gallery.index',['gallery'=>$gallery]);\n     }\n    }\n"
+                },
+                {
+                    "date": 1726912012730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,11 +6,10 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-   public function index()\n-   {\n+   public function index(){\n     $gallery = Gallery::all();\n         return view('admin.gallery.index',['gallery'=>$gallery]);\n     }\n-   }\n+}\n \n"
+                },
+                {
+                    "date": 1726912036402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,17 @@\n    public function index(){\n     $gallery = Gallery::all();\n         return view('admin.gallery.index',['gallery'=>$gallery]);\n     }\n+    public function store(Request $request){\n+        $gallery = new gallery();\n+        if ($request->file('image')) {\n+            $image = $request->file('image');\n+            $imageName = time().'.'.$image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+             $gallery -> image = '/images/'.$imageName;\n+        }\n+        $gallery->save();\n+        return redirect('/admin/gallery');\n+    }\n }\n \n"
+                },
+                {
+                    "date": 1726913098455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,21 +6,21 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-   public function index(){\n-    $gallery = Gallery::all();\n-        return view('admin.gallery.index',['gallery'=>$gallery]);\n-    }\n-    public function store(Request $request){\n-        $gallery = new gallery();\n-        if ($request->file('image')) {\n-            $image = $request->file('image');\n-            $imageName = time().'.'.$image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n-             $gallery -> image = '/images/'.$imageName;\n-        }\n-        $gallery->save();\n-        return redirect('/admin/gallery');\n-    }\n+//    public function index(){\n+//     $gallery = Gallery::all();\n+//         return view('admin.gallery.index',['gallery'=>$gallery]);\n+//     }\n+//     public function store(Request $request){\n+//         $gallery = new gallery();\n+//         if ($request->file('image')) {\n+//             $image = $request->file('image');\n+//             $imageName = time().'.'.$image->getClientOriginalExtension();\n+//             $image->move(public_path('images'), $imageName);\n+//              $gallery -> image = '/images/'.$imageName;\n+//         }\n+//         $gallery->save();\n+//         return redirect('/admin/gallery');\n+//     }\n }\n \n"
+                },
+                {
+                    "date": 1726913137227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,12 +6,12 @@\n use Illuminate\\Http\\Request;\n \n class GalleryController extends Controller\n {\n-//    public function index(){\n-//     $gallery = Gallery::all();\n-//         return view('admin.gallery.index',['gallery'=>$gallery]);\n-//     }\n+   public function index(){\n+    $gallery = Gallery::all();\n+        return view('admin.gallery.index',['gallery'=>$gallery]);\n+    }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n //             $image = $request->file('image');\n"
+                },
+                {
+                    "date": 1726913471549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class GalleryController extends Controller\n {\n    public function index(){\n     $gallery = Gallery::all();\n-        return view('admin.gallery.index',['gallery'=>$gallery]);\n+        return view('admin.gallery.index);\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913523848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,15 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n+use App\\Models\\Gallery;\n \n class GalleryController extends Controller\n {\n    public function index(){\n     $gallery = Gallery::all();\n-        return view('admin.gallery.index);\n+        return view('admin.gallery.index');\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913589571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,15 @@\n use App\\Models\\Gallery;\n \n class GalleryController extends Controller\n {\n-   public function index(){\n-    $gallery = Gallery::all();\n-        return view('admin.gallery.index');\n+    public function index()\n+    {\n+        // Fetch data from the Gallery model\n+        $gallery = Gallery::all();\n+\n+        // Pass the data to the view\n+        return view('admin.gallery.index', compact('gallery'));\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913597193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,12 @@\n class GalleryController extends Controller\n {\n     public function index()\n     {\n-        // Fetch data from the Gallery model\n+       \n         $gallery = Gallery::all();\n \n-        // Pass the data to the view\n+        \n         return view('admin.gallery.index', compact('gallery'));\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n"
+                },
+                {
+                    "date": 1726913773493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n \n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n+    p\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n //             $image = $request->file('image');\n"
+                },
+                {
+                    "date": 1726913779054,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n \n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n-    p\n+    public function \n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n //             $image = $request->file('image');\n"
+                },
+                {
+                    "date": 1726913785608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,11 @@\n \n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n-    public function \n+    public function create(){\n+        \n+    }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n //             $image = $request->file('image');\n"
+                },
+                {
+                    "date": 1726913828485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n-        \n+        ret\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913835513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n-        ret\n+        return view()\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913840902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n-        return view()\n+        return view('admin.')\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913847661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n-        return view('admin.')\n+        return view('admin.gallery.create')\n     }\n //     public function store(Request $request){\n //         $gallery = new gallery();\n //         if ($request->file('image')) {\n"
+                },
+                {
+                    "date": 1726913986649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,19 +16,19 @@\n         \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n-        return view('admin.gallery.create')\n+        return view('admin.gallery.create');\n     }\n-//     public function store(Request $request){\n-//         $gallery = new gallery();\n-//         if ($request->file('image')) {\n-//             $image = $request->file('image');\n-//             $imageName = time().'.'.$image->getClientOriginalExtension();\n-//             $image->move(public_path('images'), $imageName);\n-//              $gallery -> image = '/images/'.$imageName;\n-//         }\n-//         $gallery->save();\n-//         return redirect('/admin/gallery');\n+    public function store(Request $request){\n+        $gallery = new gallery();\n+        if ($request->file('image')) {\n+            $image = $request->file('image');\n+            $imageName = time().'.'.$image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+             $gallery -> image = '/images/'.$imageName;\n+        }\n+        $gallery->save();\n+        return redirect('/admin/gallery');\n //     }\n }\n \n"
+                },
+                {
+                    "date": 1726913993689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,7 @@\n              $gallery -> image = '/images/'.$imageName;\n         }\n         $gallery->save();\n         return redirect('/admin/gallery');\n-//     }\n+    }\n }\n \n"
+                },
+                {
+                    "date": 1726914313955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,17 +18,25 @@\n     }\n     public function create(){\n         return view('admin.gallery.create');\n     }\n-    public function store(Request $request){\n-        $gallery = new gallery();\n-        if ($request->file('image')) {\n-            $image = $request->file('image');\n-            $imageName = time().'.'.$image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n-             $gallery -> image = '/images/'.$imageName;\n-        }\n-        $gallery->save();\n-        return redirect('/admin/gallery');\n+    public function store(Request $request)\n+{\n+    $gallery = new Gallery();\n+\n+    if ($request->file('image')) {\n+        $image = $request->file('image');\n+        $imageName = time().'.'.$image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->image = '/images/'.$imageName;\n+    } else {\n+        // Set default image path\n+        $gallery->image = '/images/default.jpg';\n     }\n+\n+    $gallery->save();\n+\n+    return redirect('/admin/gallery');\n }\n \n+}\n+\n"
+                },
+                {
+                    "date": 1726914359967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     public function store(Request $request)\n {\n     $gallery = new Gallery();\n \n-    if ($request->file('image')) {\n+    if ($request->file('img')) {\n         $image = $request->file('image');\n         $imageName = time().'.'.$image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->image = '/images/'.$imageName;\n"
+                },
+                {
+                    "date": 1726914409053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,15 +23,15 @@\n {\n     $gallery = new Gallery();\n \n     if ($request->file('img')) {\n-        $image = $request->file('image');\n+        $image = $request->file('img');\n         $imageName = time().'.'.$image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->image = '/images/'.$imageName;\n     } else {\n         // Set default image path\n-        $gallery->image = '/images/default.jpg';\n+        $gallery->image = '/images/'.$imageName;\n     }\n \n     $gallery->save();\n \n"
+                },
+                {
+                    "date": 1726914418334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         $image->move(public_path('images'), $imageName);\n         $gallery->image = '/images/'.$imageName;\n     } else {\n         // Set default image path\n-        $gallery->image = '/images/'.$imageName;\n+        $gallery->img = '/images/'.$imageName;\n     }\n \n     $gallery->save();\n \n"
+                },
+                {
+                    "date": 1726914463718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n     }\n     public function create(){\n         return view('admin.gallery.create');\n     }\n+\n+    \n     public function store(Request $request)\n {\n     $gallery = new Gallery();\n \n"
+                },
+                {
+                    "date": 1726914527586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,26 +19,25 @@\n     public function create(){\n         return view('admin.gallery.create');\n     }\n \n-    \n+\n     public function store(Request $request)\n {\n-    $gallery = new Gallery();\n+    $awards = new Awards();\n+        $awards->headline = $request->headline;\n+        $awards->description = $request->description;\n+        if ($request->file('img'))\n+         {\n+            $image = $request->file('img');\n+            $imageName = time().'.'.$image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n \n-    if ($request->file('img')) {\n-        $image = $request->file('img');\n-        $imageName = time().'.'.$image->getClientOriginalExtension();\n-        $image->move(public_path('images'), $imageName);\n-        $gallery->image = '/images/'.$imageName;\n-    } else {\n-        // Set default image path\n-        $gallery->img = '/images/'.$imageName;\n-    }\n-\n-    $gallery->save();\n-\n-    return redirect('/admin/gallery');\n+            // You can also store the image path in your database if needed\n+             $awards -> img = '/images/'.$imageName;\n+        }\n+        $awards->save();\n+        return redirect(route('awards'));\n }\n \n }\n \n"
+                },
+                {
+                    "date": 1726914537876,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n \n \n     public function store(Request $request)\n {\n-    $awards = new Awards();\n+    $gallery = new Gallery();\n         $awards->headline = $request->headline;\n         $awards->description = $request->description;\n         if ($request->file('img'))\n          {\n"
+                },
+                {
+                    "date": 1726914546513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,10 @@\n \n     public function store(Request $request)\n {\n     $gallery = new Gallery();\n-        $awards->headline = $request->headline;\n-        $awards->description = $request->description;\n+        $gallery->headline = $request->headline;\n+        $awagalleryrds->description = $request->description;\n         if ($request->file('img'))\n          {\n             $image = $request->file('img');\n             $imageName = time().'.'.$image->getClientOriginalExtension();\n"
+                },
+                {
+                    "date": 1726914558003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,17 +24,17 @@\n     public function store(Request $request)\n {\n     $gallery = new Gallery();\n         $gallery->headline = $request->headline;\n-        $awagalleryrds->description = $request->description;\n+        $gallery->description = $request->description;\n         if ($request->file('img'))\n          {\n             $image = $request->file('img');\n             $imageName = time().'.'.$image->getClientOriginalExtension();\n             $image->move(public_path('images'), $imageName);\n \n             // You can also store the image path in your database if needed\n-             $awards -> img = '/images/'.$imageName;\n+             $gallery -> img = '/images/'.$imageName;\n         }\n         $awards->save();\n         return redirect(route('awards'));\n }\n"
+                },
+                {
+                    "date": 1726914568208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,10 +34,10 @@\n \n             // You can also store the image path in your database if needed\n              $gallery -> img = '/images/'.$imageName;\n         }\n-        $awards->save();\n-        return redirect(route('awards'));\n+        $gallery->save();\n+        return redirect(route('admin/gallery'));\n }\n \n }\n \n"
+                },
+                {
+                    "date": 1726914584519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n             // You can also store the image path in your database if needed\n              $gallery -> img = '/images/'.$imageName;\n         }\n         $gallery->save();\n-        return redirect(route('admin/gallery'));\n+        return redirect(route('gallery'));\n }\n \n }\n \n"
+                },
+                {
+                    "date": 1726914798169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,7 +37,13 @@\n         }\n         $gallery->save();\n         return redirect(route('gallery'));\n }\n+public function edit( string $id)\n+    {\n+        $awards = Awards::find($id); \n+        return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n+    }\n+\n }\n \n"
+                },
+                {
+                    "date": 1726914803321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         }\n         $gallery->save();\n         return redirect(route('gallery'));\n }\n-public function edit( string $id)\n+    public function edit( string $id)\n     {\n         $awards = Awards::find($id); \n         return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n"
+                },
+                {
+                    "date": 1726914809538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n         return redirect(route('gallery'));\n }\n     public function edit( string $id)\n     {\n-        $awards = Awards::find($id); \n+        $ga = Awards::find($id); \n         return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n     }\n \n"
+                },
+                {
+                    "date": 1726914816040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n         return redirect(route('gallery'));\n }\n     public function edit( string $id)\n     {\n-        $ga = Awards::find($id); \n+        $gallery = Gallery::find($id); \n         return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n     }\n \n"
+                },
+                {
+                    "date": 1726914826263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n }\n     public function edit( string $id)\n     {\n         $gallery = Gallery::find($id); \n-        return view(\"admin.awards.edit\", ['awards'=>$awards]);\n+        return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n \n     }\n \n }\n"
+                },
+                {
+                    "date": 1726914979571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,10 +40,32 @@\n }\n     public function edit( string $id)\n     {\n         $gallery = Gallery::find($id); \n-        return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n+        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n     }\n+    public function update(Request $request, string $id)\n+    {\n+        $awards = Awards::find($id);\n+        $awards -> headline = $request->headline;\n+        $awards -> description = $request->description;\n+        if ($request->file('img'))\n+         {\n+            $imagePath = public_path($awards->img);\n+            if (File::exists($imagePath)) {\n+                File::delete($imagePath);\n+            }\n+            $image = $request->file('img');\n+            $imageName = time().'.'.$image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n \n+            // You can also store the image path in your database if needed\n+             $awards -> img = '/images/'.$imageName;\n+        }\n+        $awards -> save();\n+        return redirect(route('awards',['awards'=>$awards]));\n+\n+    }\n+\n }\n \n"
+                },
+                {
+                    "date": 1726914985235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n \n     }\n     public function update(Request $request, string $id)\n     {\n-        $awards = Awards::find($id);\n+        $gallery = Awards::find($id);\n         $awards -> headline = $request->headline;\n         $awards -> description = $request->description;\n         if ($request->file('img'))\n          {\n"
+                },
+                {
+                    "date": 1726914993168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,10 @@\n \n     }\n     public function update(Request $request, string $id)\n     {\n-        $gallery = Awards::find($id);\n-        $awards -> headline = $request->headline;\n+        $gallery = Gallery::find($id);\n+        $gallery -> headline = $request->headline;\n         $awards -> description = $request->description;\n         if ($request->file('img'))\n          {\n             $imagePath = public_path($awards->img);\n"
+                },
+                {
+                    "date": 1726915005190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,21 +47,21 @@\n     public function update(Request $request, string $id)\n     {\n         $gallery = Gallery::find($id);\n         $gallery -> headline = $request->headline;\n-        $awards -> description = $request->description;\n+        $gallery -> description = $request->description;\n         if ($request->file('img'))\n          {\n-            $imagePath = public_path($awards->img);\n+            $imagePath = public_path($gallery->img);\n             if (File::exists($imagePath)) {\n                 File::delete($imagePath);\n             }\n             $image = $request->file('img');\n             $imageName = time().'.'.$image->getClientOriginalExtension();\n             $image->move(public_path('images'), $imageName);\n \n             // You can also store the image path in your database if needed\n-             $awards -> img = '/images/'.$imageName;\n+             $gallery -> img = '/images/'.$imageName;\n         }\n         $awards -> save();\n         return redirect(route('awards',['awards'=>$awards]));\n \n"
+                },
+                {
+                    "date": 1726915010291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n             // You can also store the image path in your database if needed\n              $gallery -> img = '/images/'.$imageName;\n         }\n         $awards -> save();\n-        return redirect(route('awards',['awards'=>$awards]));\n+        return redirect(route('awards',['gallery'=>$gallery]));\n \n     }\n \n }\n"
+                },
+                {
+                    "date": 1726915437790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,21 +50,17 @@\n         $gallery -> headline = $request->headline;\n         $gallery -> description = $request->description;\n         if ($request->file('img'))\n          {\n-            $imagePath = public_path($gallery->img);\n-            if (File::exists($imagePath)) {\n-                File::delete($imagePath);\n-            }\n             $image = $request->file('img');\n             $imageName = time().'.'.$image->getClientOriginalExtension();\n             $image->move(public_path('images'), $imageName);\n \n             // You can also store the image path in your database if needed\n              $gallery -> img = '/images/'.$imageName;\n         }\n-        $awards -> save();\n-        return redirect(route('awards',['gallery'=>$gallery]));\n+        $gallery->save();\n+        return redirect(route('gallery'));\n \n     }\n \n }\n"
+                },
+                {
+                    "date": 1726915518843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,28 +23,26 @@\n \n     public function store(Request $request)\n {\n     $gallery = new Gallery();\n-        $gallery->headline = $request->headline;\n-        $gallery->description = $request->description;\n-        if ($request->file('img'))\n-         {\n-            $image = $request->file('img');\n-            $imageName = time().'.'.$image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n \n-            // You can also store the image path in your database if needed\n-             $gallery -> img = '/images/'.$imageName;\n-        }\n-        $gallery->save();\n-        return redirect(route('gallery'));\n+    $gallery->headline = $request->headline;\n+    $gallery->description = $request->description;\n+\n+    if ($request->file('img')) {\n+        $image = $request->file('img');\n+        $imageName = time() . '.' . $image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n+    }\n+\n+    $gallery->save();\n+    return redirect(route('gallery'));\n }\n-    public function edit( string $id)\n-    {\n-        $gallery = Gallery::find($id); \n-        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n-    }\n     public function update(Request $request, string $id)\n     {\n         $gallery = Gallery::find($id);\n         $gallery -> headline = $request->headline;\n"
+                },
+                {
+                    "date": 1726915534053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,25 +41,30 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n-    public function update(Request $request, string $id)\n-    {\n-        $gallery = Gallery::find($id);\n-        $gallery -> headline = $request->headline;\n-        $gallery -> description = $request->description;\n-        if ($request->file('img'))\n-         {\n-            $image = $request->file('img');\n-            $imageName = time().'.'.$image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n+public function update(Request $request, string $id)\n+{\n+    $gallery = Gallery::find($id);\n \n-            // You can also store the image path in your database if needed\n-             $gallery -> img = '/images/'.$imageName;\n-        }\n-        $gallery->save();\n-        return redirect(route('gallery'));\n+    $gallery->headline = $request->headline;\n+    $gallery->description = $request->description;\n \n+    if ($request->file('img')) {\n+        $image = $request->file('img');\n+        $imageName = time() . '.' . $image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->img = '/images/' . $imageName;\n     }\n \n+    // Optionally, if no image is uploaded, decide whether to set img to null or keep the existing value\n+    // If you want to keep the existing image if none is uploaded:\n+    // If you want to set it to null:\n+    // $gallery->img = null; // or keep the existing value\n+\n+    $gallery->save();\n+    return redirect(route('gallery'));\n }\n \n+\n+}\n+\n"
+                },
+                {
+                    "date": 1726915632003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,23 +45,22 @@\n public function update(Request $request, string $id)\n {\n     $gallery = Gallery::find($id);\n \n+    \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n     }\n \n-    // Optionally, if no image is uploaded, decide whether to set img to null or keep the existing value\n-    // If you want to keep the existing image if none is uploaded:\n-    // If you want to set it to null:\n-    // $gallery->img = null; // or keep the existing value\n-\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n"
+                },
+                {
+                    "date": 1726915706340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,8 +41,10 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n+\n+\n public function update(Request $request, string $id)\n {\n     $gallery = Gallery::find($id);\n \n"
+                },
+                {
+                    "date": 1726915714301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,14 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n+public function Gallery( string $id)\n+{\n+    $awards = Awards::find($id); \n+    return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n+}\n \n public function update(Request $request, string $id)\n {\n     $gallery = Gallery::find($id);\n"
+                },
+                {
+                    "date": 1726915723081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,11 +41,11 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n-public function Gallery( string $id)\n+public function edit( string $id)\n {\n-    $awards = Awards::find($id); \n+    $gallery = Gallery::find($id); \n     return view(\"admin.awards.edit\", ['awards'=>$awards]);\n \n }\n \n"
+                },
+                {
+                    "date": 1726915728558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n \n public function edit( string $id)\n {\n     $gallery = Gallery::find($id); \n-    return view(\"admin.awards.edit\", ['awards'=>$awards]);\n+    return view(\"admin.gallery.edit\", ['gallery'=>$awgalleryards]);\n \n }\n \n public function update(Request $request, string $id)\n"
+                },
+                {
+                    "date": 1726915733662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n \n public function edit( string $id)\n {\n     $gallery = Gallery::find($id); \n-    return view(\"admin.gallery.edit\", ['gallery'=>$awgalleryards]);\n+    return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n \n }\n \n public function update(Request $request, string $id)\n"
+                },
+                {
+                    "date": 1726915817591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,33 +44,37 @@\n \n public function edit( string $id)\n {\n     $gallery = Gallery::find($id); \n-    return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n+    return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n }\n-\n public function update(Request $request, string $id)\n {\n+    $request->validate([\n+        'headline' => 'required|string|max:255',\n+        'description' => 'nullable|string',\n+        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',\n+    ]);\n+\n     $gallery = Gallery::find($id);\n \n-    \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->img = '/images/' . $imageName;\n-    } else {\n-        // Set a default value or handle the absence of an image\n-        $gallery->img = null; // or set a default image path\n     }\n \n     $gallery->save();\n+\n     return redirect(route('gallery'));\n }\n \n+}\n \n+\n }\n \n"
+                },
+                {
+                    "date": 1726915844076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,37 +44,33 @@\n \n public function edit( string $id)\n {\n     $gallery = Gallery::find($id); \n-    return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+    return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n \n }\n+\n public function update(Request $request, string $id)\n {\n-    $request->validate([\n-        'headline' => 'required|string|max:255',\n-        'description' => 'nullable|string',\n-        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',\n-    ]);\n-\n     $gallery = Gallery::find($id);\n \n+    \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n     }\n \n     $gallery->save();\n-\n     return redirect(route('gallery'));\n }\n \n-}\n \n-\n }\n \n"
+                },
+                {
+                    "date": 1726916968565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,33 +44,32 @@\n \n public function edit( string $id)\n {\n     $gallery = Gallery::find($id); \n-    return view(\"admin.gallery.edit\", ['gallery'=>$awards]);\n+    return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n }\n \n public function update(Request $request, string $id)\n {\n     $gallery = Gallery::find($id);\n-\n-    \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n-    if ($request->file('img')) {\n+    if ($request->hasFile('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n         $gallery->img = '/images/' . $imageName;\n     } else {\n-        // Set a default value or handle the absence of an image\n-        $gallery->img = null; // or set a default image path\n+        // If no new image is uploaded, retain the existing image\n+        $gallery->img = $gallery->img; // Keep the existing image path\n     }\n \n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n \n+\n }\n \n"
+                },
+                {
+                    "date": 1726917139868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,18 @@\n \n     $gallery->save();\n     return redirect(route('gallery'));\n }\n+public function item_delete(string $id)\n+{\n+    $awards = Awards::find($id);\n+    $imagePath = public_path($awards->img);\n+    if (File::exists($imagePath)) {\n+        File::delete($imagePath);\n+    }\n+    $awards->delete();\n+    return redirect()->back();\n+}\n \n \n-\n }\n \n"
+                },
+                {
+                    "date": 1726917146255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n     return redirect(route('gallery'));\n }\n public function item_delete(string $id)\n {\n-    $awards = Awards::find($id);\n+    $awards = Gallery::find($id);\n     $imagePath = public_path($awards->img);\n     if (File::exists($imagePath)) {\n         File::delete($imagePath);\n     }\n"
+                },
+                {
+                    "date": 1726917152214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,10 +69,10 @@\n     return redirect(route('gallery'));\n }\n public function item_delete(string $id)\n {\n-    $awards = Gallery::find($id);\n-    $imagePath = public_path($awards->img);\n+    $gallery = Gallery::find($id);\n+    $gallery = public_path($awards->img);\n     if (File::exists($imagePath)) {\n         File::delete($imagePath);\n     }\n     $awards->delete();\n"
+                },
+                {
+                    "date": 1726917222425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,16 +67,16 @@\n \n     $gallery->save();\n     return redirect(route('gallery'));\n }\n-public function item_delete(string $id)\n+public function delete(string $id)\n {\n     $gallery = Gallery::find($id);\n-    $gallery = public_path($awards->img);\n+    $gallery = public_path($gallery->img);\n     if (File::exists($imagePath)) {\n         File::delete($imagePath);\n     }\n-    $awards->delete();\n+    $gallery->delete();\n     return redirect()->back();\n }\n \n \n"
+                },
+                {
+                    "date": 1726917234404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,8 +67,10 @@\n \n     $gallery->save();\n     return redirect(route('gallery'));\n }\n+\n+\n public function delete(string $id)\n {\n     $gallery = Gallery::find($id);\n     $gallery = public_path($gallery->img);\n"
+                },
+                {
+                    "date": 1726917246073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,14 +41,14 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n-public function edit( string $id)\n-{\n-    $gallery = Gallery::find($id); \n-    return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+        public function edit( string $id)\n+        {\n+            $gallery = Gallery::find($id); \n+            return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n-}\n+        }\n \n public function update(Request $request, string $id)\n {\n     $gallery = Gallery::find($id);\n@@ -69,18 +69,18 @@\n     return redirect(route('gallery'));\n }\n \n \n-public function delete(string $id)\n-{\n-    $gallery = Gallery::find($id);\n-    $gallery = public_path($gallery->img);\n-    if (File::exists($imagePath)) {\n-        File::delete($imagePath);\n-    }\n-    $gallery->delete();\n-    return redirect()->back();\n-}\n+            public function delete(string $id)\n+            {\n+                $gallery = Gallery::find($id);\n+                $gallery = public_path($gallery->img);\n+                if (File::exists($imagePath)) {\n+                    File::delete($imagePath);\n+                }\n+                $gallery->delete();\n+                return redirect()->back();\n+            }\n \n \n }\n \n"
+                },
+                {
+                    "date": 1726917259497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,36 +41,36 @@\n     $gallery->save();\n     return redirect(route('gallery'));\n }\n \n-        public function edit( string $id)\n-        {\n-            $gallery = Gallery::find($id); \n-            return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+    public function edit( string $id)\n+    {\n+        $gallery = Gallery::find($id); \n+        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n+    }\n+\n+    public function update(Request $request, string $id)\n+    {\n+        $gallery = Gallery::find($id);\n+        $gallery->headline = $request->headline;\n+        $gallery->description = $request->description;\n+\n+        if ($request->hasFile('img')) {\n+            $image = $request->file('img');\n+            $imageName = time() . '.' . $image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+            $gallery->img = '/images/' . $imageName;\n+        } else {\n+            // If no new image is uploaded, retain the existing image\n+            $gallery->img = $gallery->img; // Keep the existing image path\n         }\n \n-public function update(Request $request, string $id)\n-{\n-    $gallery = Gallery::find($id);\n-    $gallery->headline = $request->headline;\n-    $gallery->description = $request->description;\n-\n-    if ($request->hasFile('img')) {\n-        $image = $request->file('img');\n-        $imageName = time() . '.' . $image->getClientOriginalExtension();\n-        $image->move(public_path('images'), $imageName);\n-        $gallery->img = '/images/' . $imageName;\n-    } else {\n-        // If no new image is uploaded, retain the existing image\n-        $gallery->img = $gallery->img; // Keep the existing image path\n+        $gallery->save();\n+        return redirect(route('gallery'));\n     }\n \n-    $gallery->save();\n-    return redirect(route('gallery'));\n-}\n \n-\n             public function delete(string $id)\n             {\n                 $gallery = Gallery::find($id);\n                 $gallery = public_path($gallery->img);\n"
+                },
+                {
+                    "date": 1726917417083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gallery;\n \n+\n class GalleryController extends Controller\n {\n     public function index()\n     {\n"
+                },
+                {
+                    "date": 1726917469592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gallery;\n+use Illuminate\\Support\\Facades\\File;\n \n \n class GalleryController extends Controller\n {\n@@ -70,18 +71,26 @@\n         return redirect(route('gallery'));\n     }\n \n \n-            public function delete(string $id)\n-            {\n-                $gallery = Gallery::find($id);\n-                $gallery = public_path($gallery->img);\n-                if (File::exists($imagePath)) {\n-                    File::delete($imagePath);\n-                }\n-                $gallery->delete();\n-                return redirect()->back();\n-            }\n+    public function delete(string $id)\n+    {\n+        $gallery = Gallery::find($id);\n+    \n+        // Get the image path\n+        $imagePath = public_path($gallery->img);\n+    \n+        // Check if the file exists and delete it\n+        if (File::exists($imagePath)) {\n+            File::delete($imagePath);\n+        }\n+    \n+        // Now delete the gallery record\n+        $gallery->delete();\n+    \n+        return redirect()->back();\n+    }\n+    \n \n \n }\n \n"
+                },
+                {
+                    "date": 1726917476071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,12 +75,12 @@\n     public function delete(string $id)\n     {\n         $gallery = Gallery::find($id);\n     \n-        // Get the image path\n+        \n         $imagePath = public_path($gallery->img);\n     \n-        // Check if the file exists and delete it\n+        \n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n         }\n     \n"
+                },
+                {
+                    "date": 1726917482405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,11 +83,10 @@\n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n         }\n     \n-        // Now delete the gallery record\n+       \n         $gallery->delete();\n-    \n         return redirect()->back();\n     }\n     \n \n"
+                },
+                {
+                    "date": 1726917487487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,16 +76,12 @@\n     {\n         $gallery = Gallery::find($id);\n     \n         \n-        $imagePath = public_path($gallery->img);\n-    \n-        \n+        $imagePath = public_path($gallery->img);      \n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n-        }\n-    \n-       \n+        }       \n         $gallery->delete();\n         return redirect()->back();\n     }\n     \n"
+                },
+                {
+                    "date": 1726930122263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n     {\n        \n         $gallery = Gallery::all();\n \n-        \n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n         return view('admin.gallery.create');\n@@ -73,11 +72,9 @@\n \n \n     public function delete(string $id)\n     {\n-        $gallery = Gallery::find($id);\n-    \n-        \n+        $gallery = Gallery::find($id);    \n         $imagePath = public_path($gallery->img);      \n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n         }       \n"
+                },
+                {
+                    "date": 1726930356234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,21 +10,19 @@\n \n class GalleryController extends Controller\n {\n     public function index()\n-    {\n-       \n+    { \n         $gallery = Gallery::all();\n-\n         return view('admin.gallery.index', compact('gallery'));\n     }\n     public function create(){\n         return view('admin.gallery.create');\n     }\n \n \n     public function store(Request $request)\n-{\n+    {\n     $gallery = new Gallery();\n \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n"
+                },
+                {
+                    "date": 1727064173998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n             $gallery->img = $gallery->img; // Keep the existing image path\n         }\n \n         $gallery->save();\n-        return redirect(route('gallery'));\n+        return redirect()->back();\n     }\n \n \n     public function delete(string $id)\n"
+                },
+                {
+                    "date": 1727064313226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,10 @@\n             $gallery->img = $gallery->img; // Keep the existing image path\n         }\n \n         $gallery->save();\n-        return redirect()->back();\n+        return redirect()->route('admin.gallery');\n+\n     }\n \n \n     public function delete(string $id)\n"
+                }
+            ],
+            "date": 1726909258978,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\admin;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass GalleryController extends Controller\n{\n    public function index(){\n        return view('admin.gallery.index');\n    }\n    public function create(){\n        return view('admin.gallery.create');\n    }\n}\n"
+        }
+    ]
+}

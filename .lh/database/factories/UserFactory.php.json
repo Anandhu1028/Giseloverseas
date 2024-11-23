@@ -1,0 +1,34 @@
+{
+    "sourceFile": "database/factories/UserFactory.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1726998956097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726998976534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,8 @@\n             'password' => bcrypt('123456'), // Set your custom password\n             'remember_token' => Str::random(10),\n         ];\n     }\n-    \n \n     /**\n      * Indicate that the model's email address should be unverified.\n      *\n"
+                },
+                {
+                    "date": 1726999517238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,14 +17,14 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->name(),\n-            'email' => 'giselAdmin@gmail.com', // Set your custom email\n-            'email_verified_at' => now(),\n-            'password' => bcrypt('123456'), // Set your custom password\n-            'remember_token' => Str::random(10),\n-        ];\n+        'name' => fake()->name(),\n+        'email' => 'giselAdmin@gmail.com', // Set your custom email\n+        'email_verified_at' => now(),\n+        'password' => bcrypt('123456'), // Set your custom password\n+        'remember_token' => Str::random(10),\n+    ];\n     }\n \n     /**\n      * Indicate that the model's email address should be unverified.\n"
+                },
+                {
+                    "date": 1726999538312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,14 +17,14 @@\n      */\n     public function definition(): array\n     {\n         return [\n-        'name' => fake()->name(),\n-        'email' => 'giselAdmin@gmail.com', // Set your custom email\n-        'email_verified_at' => now(),\n-        'password' => bcrypt('123456'), // Set your custom password\n-        'remember_token' => Str::random(10),\n-    ];\n+            'name' => fake()->name(),\n+            'email' => fake()->unique()->safeEmail(),\n+            'email_verified_at' => now(),\n+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password\n+            'remember_token' => Str::random(10),\n+        ];p\n     }\n \n     /**\n      * Indicate that the model's email address should be unverified.\n"
+                },
+                {
+                    "date": 1727000353714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n             'email' => fake()->unique()->safeEmail(),\n             'email_verified_at' => now(),\n             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password\n             'remember_token' => Str::random(10),\n-        ];p\n+        ];\n     }\n \n     /**\n      * Indicate that the model's email address should be unverified.\n"
+                }
+            ],
+            "date": 1726998956097,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Factories;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\Factory;\nuse Illuminate\\Support\\Str;\n\n/**\n * @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\User>\n */\nclass UserFactory extends Factory\n{\n    /**\n     * Define the model's default state.\n     *\n     * @return array<string, mixed>\n     */\n    public function definition(): array\n    {\n        return [\n            'name' => fake()->name(),\n            'email' => 'giselAdmin@gmail.com', // Set your custom email\n            'email_verified_at' => now(),\n            'password' => bcrypt('123456'), // Set your custom password\n            'remember_token' => Str::random(10),\n        ];\n    }\n    \n\n    /**\n     * Indicate that the model's email address should be unverified.\n     *\n     * @return $this\n     */\n    public function unverified(): static\n    {\n        return $this->state(fn (array $attributes) => [\n            'email_verified_at' => null,\n        ]);\n    }\n}\n"
+        }
+    ]
+}

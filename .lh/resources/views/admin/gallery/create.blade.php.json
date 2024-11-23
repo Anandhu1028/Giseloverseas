@@ -1,0 +1,26 @@
+{
+    "sourceFile": "resources/views/admin/gallery/create.blade.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1726907581220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726907587068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n @extends('layouts.admin.app')\r\n @section('content')\r\n-@endsectiom\n\\ No newline at end of file\n+@endsectio\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726908235362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n                             <label class=\"form-label\">Headline</label>\r\n                             <input type=\"text\" name=\"headline\" class=\"form-control\">\r\n                           </div>\r\n                           <div class=\"col-12\">\r\n-                            <label class=\"form-label\">Dea</label>\r\n+                            <label class=\"form-label\">Deac</label>\r\n                             <input type=\"text\" name=\"#0\" class=\"form-control\" placeholder=\"info@gmail.com\">\r\n                           </div>\r\n                           <div class=\"col-12\">\r\n                             <label class=\"form-label\">Input with Phone </label>\r\n"
+                }
+            ],
+            "date": 1726907581220,
+            "name": "Commit-0",
+            "content": "@extends('layouts.admin.app')\r\n@section('content')"
+        }
+    ]
+}

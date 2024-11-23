@@ -1,0 +1,42 @@
+{
+    "sourceFile": "app/Http/Controllers/Auth/LoginController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1726994273321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726994283979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n use Illuminate\\Http\\Request;\n \n class LoginController extends Controller\n {\n-    public\n+    public function login()\n }\n"
+                },
+                {
+                    "date": 1726994289478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,8 @@\n use Illuminate\\Http\\Request;\n \n class LoginController extends Controller\n {\n-    public function login()\n+    public function login(){\n+        return view\n+    }\n }\n"
+                },
+                {
+                    "date": 1726994295070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class LoginController extends Controller\n {\n     public function login(){\n-        return view\n+        return view('au')\n     }\n }\n"
+                },
+                {
+                    "date": 1726994301199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class LoginController extends Controller\n {\n     public function login(){\n-        return view('au')\n+        return view('auth.login')\n     }\n }\n"
+                },
+                {
+                    "date": 1727000716089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,6 +9,6 @@\n {\n     public function login(){\n         return view('auth.login');\n     }\n-    \n+    p\n }\n"
+                },
+                {
+                    "date": 1727001661381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,7 @@\n     public function login(){\n         return view('auth.login');\n     }\n     public function dologin(){\n-        if(auth())\n+        if(auth()->)\n     }\n }\n"
+                }
+            ],
+            "date": 1726994273321,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\Auth;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass LoginController extends Controller\n{\n    public\n}\n"
+        }
+    ]
+}

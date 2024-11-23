@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/Models/News.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1726923941581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726923957832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,7 @@\n use Illuminate\\Database\\Eloquent\\Model;\n \n class News extends Model\n {\n-    protected $table = 'galleries';\n+    protected $table = 'news_and_blogs';\n     protected $guarded = [];\n }\n"
+                }
+            ],
+            "date": 1726923941581,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass News extends Model\n{\n    protected $table = 'galleries';\n    protected $guarded = [];\n}\n"
+        }
+    ]
+}

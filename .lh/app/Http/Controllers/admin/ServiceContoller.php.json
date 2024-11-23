@@ -1,0 +1,102 @@
+{
+    "sourceFile": "app/Http/Controllers/Admin/ServiceContoller.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 21,
+            "patches": [
+                {
+                    "date": 1726936300603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726936316815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,10 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n+use App\\Models\\News;\n+use Illuminate\\Support\\Facades\\File;\n \n class ServiceContoller extends Controller\n {\n     public function index(){\n"
+                },
+                {
+                    "date": 1726936330129,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n-use App\\Models\\News;\n+use App\\Models\\Servic;\n use Illuminate\\Support\\Facades\\File;\n \n class ServiceContoller extends Controller\n {\n"
+                },
+                {
+                    "date": 1726936347352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n-use App\\Models\\Servic;\n+use App\\Models\\Service;\n use Illuminate\\Support\\Facades\\File;\n \n class ServiceContoller extends Controller\n {\n     public function index(){\n        \n-        $news = News::all();\n+        $news = Service::all();\n         return view('admin.news.index', compact('news'));\n     }\n \n }\n"
+                },
+                {
+                    "date": 1726936356965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n class ServiceContoller extends Controller\n {\n     public function index(){\n        \n-        $news = Service::all();\n-        return view('admin.news.index', compact('news'));\n+        $service = Service::all();\n+        return view('admin.service.index', compact('news'));\n     }\n \n }\n"
+                },
+                {
+                    "date": 1726936432428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,72 @@\n {\n     public function index(){\n        \n         $service = Service::all();\n-        return view('admin.service.index', compact('news'));\n+        return view('admin.service.index', compact('service'));\n     }\n+    public function create(){\n+        return view('admin.gallery.create');\n+    }\n \n+\n+    public function store(Request $request)\n+    {\n+    $gallery = new Gallery();\n+\n+    $gallery->headline = $request->headline;\n+    $gallery->description = $request->description;\n+\n+    if ($request->file('img')) {\n+        $image = $request->file('img');\n+        $imageName = time() . '.' . $image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n+    }\n+\n+    $gallery->save();\n+    return redirect(route('gallery'));\n }\n+\n+    public function edit( string $id)\n+    {\n+        $gallery = Gallery::find($id); \n+        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+\n+    }\n+\n+    public function update(Request $request, string $id)\n+    {\n+        $gallery = Gallery::find($id);\n+        $gallery->headline = $request->headline;\n+        $gallery->description = $request->description;\n+\n+        if ($request->hasFile('img')) {\n+            $image = $request->file('img');\n+            $imageName = time() . '.' . $image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+            $gallery->img = '/images/' . $imageName;\n+        } else {\n+            // If no new image is uploaded, retain the existing image\n+            $gallery->img = $gallery->img; // Keep the existing image path\n+        }\n+\n+        $gallery->save();\n+        return redirect(route('gallery'));\n+    }\n+\n+\n+    public function delete(string $id)\n+    {\n+        $gallery = Gallery::find($id);    \n+        $imagePath = public_path($gallery->img);      \n+        if (File::exists($imagePath)) {\n+            File::delete($imagePath);\n+        }       \n+        $gallery->delete();\n+        return redirect()->back();\n+    }\n+\n+}\n"
+                },
+                {
+                    "date": 1726936439972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new Gallery();\n+    $gallery = new Service();\n \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n"
+                },
+                {
+                    "date": 1726936446702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,16 +41,16 @@\n }\n \n     public function edit( string $id)\n     {\n-        $gallery = Gallery::find($id); \n+        $gallery = Service::find($id); \n         return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n     }\n \n     public function update(Request $request, string $id)\n     {\n-        $gallery = Gallery::find($id);\n+        $gallery = Service::find($id);\n         $gallery->headline = $request->headline;\n         $gallery->description = $request->description;\n \n         if ($request->hasFile('img')) {\n"
+                },
+                {
+                    "date": 1726936463254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         $service = Service::all();\n         return view('admin.service.index', compact('service'));\n     }\n     public function create(){\n-        return view('admin.gallery.create');\n+        return view('admin.service.create');\n     }\n \n \n     public function store(Request $request)\n@@ -69,9 +69,9 @@\n \n \n     public function delete(string $id)\n     {\n-        $gallery = Gallery::find($id);    \n+        $gallery = Service::find($id);    \n         $imagePath = public_path($gallery->img);      \n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n         }       \n"
+                },
+                {
+                    "date": 1726936468757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,12 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new Service();\n+    $service = new Service();\n \n-    $gallery->headline = $request->headline;\n-    $gallery->description = $request->description;\n+    $service->headline = $request->headline;\n+    $service->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n"
+                },
+                {
+                    "date": 1726936473972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,12 +29,12 @@\n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n-        $gallery->img = '/images/' . $imageName;\n+        $service->img = '/images/' . $imageName;\n     } else {\n         // Set a default value or handle the absence of an image\n-        $gallery->img = null; // or set a default image path\n+        $service->img = null; // or set a default image path\n     }\n \n     $gallery->save();\n     return redirect(route('gallery'));\n"
+                },
+                {
+                    "date": 1726936482993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n         // Set a default value or handle the absence of an image\n         $service->img = null; // or set a default image path\n     }\n \n-    $gallery->save();\n+    $service->save();\n     return redirect(route('gallery'));\n }\n \n     public function edit( string $id)\n"
+                },
+                {
+                    "date": 1726936488336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,15 +36,15 @@\n         $service->img = null; // or set a default image path\n     }\n \n     $service->save();\n-    return redirect(route('gallery'));\n+    return redirect(route('service'));\n }\n \n     public function edit( string $id)\n     {\n-        $gallery = Service::find($id); \n-        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+        $service = Service::find($id); \n+        return view(\"admin.service.edit\", ['gallery'=>$gallery]);\n \n     }\n \n     public function update(Request $request, string $id)\n"
+                },
+                {
+                    "date": 1726936495240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,15 +42,15 @@\n \n     public function edit( string $id)\n     {\n         $service = Service::find($id); \n-        return view(\"admin.service.edit\", ['gallery'=>$gallery]);\n+        return view(\"admin.service.edit\", ['service'=>$service]);\n \n     }\n \n     public function update(Request $request, string $id)\n     {\n-        $gallery = Service::find($id);\n+        $service = Service::find($id);\n         $gallery->headline = $request->headline;\n         $gallery->description = $request->description;\n \n         if ($request->hasFile('img')) {\n"
+                },
+                {
+                    "date": 1726936500839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n \n     public function update(Request $request, string $id)\n     {\n         $service = Service::find($id);\n-        $gallery->headline = $request->headline;\n+        $service->headline = $request->headline;\n         $gallery->description = $request->description;\n \n         if ($request->hasFile('img')) {\n             $image = $request->file('img');\n"
+                },
+                {
+                    "date": 1726936512311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,18 +50,18 @@\n     public function update(Request $request, string $id)\n     {\n         $service = Service::find($id);\n         $service->headline = $request->headline;\n-        $gallery->description = $request->description;\n+        $service->description = $request->description;\n \n         if ($request->hasFile('img')) {\n             $image = $request->file('img');\n             $imageName = time() . '.' . $image->getClientOriginalExtension();\n             $image->move(public_path('images'), $imageName);\n-            $gallery->img = '/images/' . $imageName;\n+            $service->img = '/images/' . $imageName;\n         } else {\n             // If no new image is uploaded, retain the existing image\n-            $gallery->img = $gallery->img; // Keep the existing image path\n+            $service->img = $gallery->img; // Keep the existing image path\n         }\n \n         $gallery->save();\n         return redirect(route('gallery'));\n"
+                },
+                {
+                    "date": 1726936517444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,13 +59,13 @@\n             $image->move(public_path('images'), $imageName);\n             $service->img = '/images/' . $imageName;\n         } else {\n             // If no new image is uploaded, retain the existing image\n-            $service->img = $gallery->img; // Keep the existing image path\n+            $service->img = $service->img; // Keep the existing image path\n         }\n \n-        $gallery->save();\n-        return redirect(route('gallery'));\n+        $service->save();\n+        return redirect(route('service'));\n     }\n \n \n     public function delete(string $id)\n"
+                },
+                {
+                    "date": 1726936522948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,14 +69,14 @@\n \n \n     public function delete(string $id)\n     {\n-        $gallery = Service::find($id);    \n-        $imagePath = public_path($gallery->img);      \n+        $service = Service::find($id);    \n+        $imagePath = public_path($service->img);      \n         if (File::exists($imagePath)) {\n             File::delete($imagePath);\n         }       \n-        $gallery->delete();\n+        $service->delete();\n         return redirect()->back();\n     }\n \n }\n"
+                },
+                {
+                    "date": 1726981667721,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n {\n     public function index(){\n        \n         $service = Service::all();\n-        return view('admin.service.index', compact('service'));\n+        return view('admin.service.index', compact('admin.service'));\n     }\n     public function create(){\n         return view('admin.service.create');\n     }\n"
+                },
+                {
+                    "date": 1726981681671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n         $service->img = null; // or set a default image path\n     }\n \n     $service->save();\n-    return redirect(route('service'));\n+    return redirect(route('adservice'));\n }\n \n     public function edit( string $id)\n     {\n"
+                },
+                {
+                    "date": 1726981693998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n         $service->img = null; // or set a default image path\n     }\n \n     $service->save();\n-    return redirect(route('adservice'));\n+    return redirect(route('admin.service'));\n }\n \n     public function edit( string $id)\n     {\n@@ -63,9 +63,9 @@\n             $service->img = $service->img; // Keep the existing image path\n         }\n \n         $service->save();\n-        return redirect(route('service'));\n+        return redirect(route('adminservice'));\n     }\n \n \n     public function delete(string $id)\n"
+                },
+                {
+                    "date": 1726981745782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n {\n     public function index(){\n        \n         $service = Service::all();\n-        return view('admin.service.index', compact('admin.service'));\n+        return view('admin.service.index', compact('service'));\n     }\n     public function create(){\n         return view('admin.service.create');\n     }\n@@ -63,9 +63,9 @@\n             $service->img = $service->img; // Keep the existing image path\n         }\n \n         $service->save();\n-        return redirect(route('adminservice'));\n+        return redirect(route('admin.service'));\n     }\n \n \n     public function delete(string $id)\n"
+                }
+            ],
+            "date": 1726936300603,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\Admin;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass ServiceContoller extends Controller\n{\n    public function index(){\n       \n        $news = News::all();\n        return view('admin.news.index', compact('news'));\n    }\n\n}\n"
+        }
+    ]
+}

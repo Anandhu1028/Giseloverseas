@@ -1,0 +1,46 @@
+{
+    "sourceFile": "app/Http/Controllers/Auth/AuthController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1726992981418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726992988346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n use Illuminate\\Http\\Request;\n \n class AuthController extends Controller\n {\n-    public function\n+    public function login()\n }\n"
+                },
+                {
+                    "date": 1726993000970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,8 @@\n use Illuminate\\Http\\Request;\n \n class AuthController extends Controller\n {\n-    public function login()\n+    public function login(){\n+        return view\n+    }\n }\n"
+                },
+                {
+                    "date": 1726993006790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class AuthController extends Controller\n {\n     public function login(){\n-        return view\n+        return view(login);\n     }\n }\n"
+                },
+                {
+                    "date": 1726993246126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class AuthController extends Controller\n {\n     public function login(){\n-        return view(login);\n+        return view('login.login');\n     }\n }\n"
+                },
+                {
+                    "date": 1726993567089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,27 @@\n-<?php\n+namespace App\\Http\\Controllers;\n \n-namespace App\\Http\\Controllers\\Auth;\n-\n-use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n+use Illuminate\\Support\\Facades\\Auth;\n \n class AuthController extends Controller\n {\n-    public function login(){\n-        return view('login.login');\n+    public function showLoginForm()\n+    {\n+        return view('auth.login'); // Ensure this view exists\n     }\n+\n+    public function login(Request $request)\n+    {\n+        $credentials = $request->only('email', 'password');\n+\n+        if (Auth::attempt($credentials)) {\n+            // Authentication passed, redirect to admin dashboard\n+            return redirect()->route('dashboard');\n+        }\n+\n+        // Authentication failed, redirect back with an error\n+        return redirect()->back()->withErrors([\n+            'email' => 'The provided credentials do not match our records.',\n+        ]);\n+    }\n }\n"
+                },
+                {
+                    "date": 1726993581427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n-namespace App\\Http\\Controllers;\n+<?php\n \n+namespace App\\Http\\Controllers\\Auth;\n+\n+use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n-use Illuminate\\Support\\Facades\\Auth;\n \n class AuthController extends Controller\n {\n     public function showLoginForm()\n"
+                },
+                {
+                    "date": 1726993997335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,19 +11,6 @@\n     {\n         return view('auth.login'); // Ensure this view exists\n     }\n \n-    public function login(Request $request)\n-    {\n-        $credentials = $request->only('email', 'password');\n-\n-        if (Auth::attempt($credentials)) {\n-            // Authentication passed, redirect to admin dashboard\n-            return redirect()->route('dashboard');\n-        }\n-\n-        // Authentication failed, redirect back with an error\n-        return redirect()->back()->withErrors([\n-            'email' => 'The provided credentials do not match our records.',\n-        ]);\n-    }\n+    \n }\n"
+                }
+            ],
+            "date": 1726992981418,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\Auth;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass AuthController extends Controller\n{\n    public function\n}\n"
+        }
+    ]
+}

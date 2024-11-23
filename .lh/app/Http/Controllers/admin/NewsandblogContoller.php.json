@@ -1,0 +1,146 @@
+{
+    "sourceFile": "app/Http/Controllers/Admin/NewsandblogContoller.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 32,
+            "patches": [
+                {
+                    "date": 1726925144937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726925152631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,6 @@\n use Illuminate\\Http\\Request;\n \n class NewsandblogContoller extends Controller\n {\n-    public fu\n+    public function index()\n }\n"
+                },
+                {
+                    "date": 1726925158298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,6 +6,8 @@\n use Illuminate\\Http\\Request;\n \n class NewsandblogContoller extends Controller\n {\n-    public function index()\n+    public function index(){\n+        return view\n+    }\n }\n"
+                },
+                {
+                    "date": 1726925166772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,7 @@\n \n class NewsandblogContoller extends Controller\n {\n     public function index(){\n-        return view\n+        return view('admin.news.index')\n     }\n }\n"
+                },
+                {
+                    "date": 1726930135233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,7 +7,9 @@\n \n class NewsandblogContoller extends Controller\n {\n     public function index(){\n-        return view('admin.news.index')\n+        return view('admin.news.index');\n+        $gallery = Gallery::all();\n+        return view('admin.gallery.index', compact('gallery'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930142991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class NewsandblogContoller extends Controller\n {\n     public function index(){\n-        return view('admin.news.index');\n+       \n         $gallery = Gallery::all();\n         return view('admin.gallery.index', compact('gallery'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930148226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,7 @@\n {\n     public function index(){\n        \n         $gallery = Gallery::all();\n-        return view('admin.gallery.index', compact('gallery'));\n+        return view('admin.news.index', compact('gallery'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930154142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,7 @@\n {\n     public function index(){\n        \n         $gallery = Gallery::all();\n-        return view('admin.news.index', compact('gallery'));\n+        return view('admin.news.index', compact('news'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930159411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,8 @@\n class NewsandblogContoller extends Controller\n {\n     public function index(){\n        \n-        $gallery = Gallery::all();\n+        $news = news::all();\n         return view('admin.news.index', compact('news'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930173756,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,14 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n+use App\\Models\\Gallery;\n \n class NewsandblogContoller extends Controller\n {\n     public function index(){\n        \n-        $news = news::all();\n+        $news = News::all();\n         return view('admin.news.index', compact('news'));\n     }\n }\n"
+                },
+                {
+                    "date": 1726930365402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,19 @@\n namespace App\\Http\\Controllers\\Admin;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n-use App\\Models\\Gallery;\n+use App\\Models\\News;\n \n class NewsandblogContoller extends Controller\n {\n     public function index(){\n        \n         $news = News::all();\n         return view('admin.news.index', compact('news'));\n     }\n+\n+\n+    public function create(){\n+        return view('admin.gallery.create');\n+    }\n }\n"
+                },
+                {
+                    "date": 1726930371138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,7 +15,7 @@\n     }\n \n \n     public function create(){\n-        return view('admin.gallery.create');\n+        return view('admin.news.create');\n     }\n }\n"
+                },
+                {
+                    "date": 1726930476073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,26 @@\n \n     public function create(){\n         return view('admin.news.create');\n     }\n+\n+\n+    public function store(Request $request)\n+    {\n+    $gallery = new Gallery();\n+\n+    $gallery->headline = $request->headline;\n+    $gallery->description = $request->description;\n+\n+    if ($request->file('img')) {\n+        $image = $request->file('img');\n+        $imageName = time() . '.' . $image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n+    }\n+\n+    $gallery->save();\n+    return redirect(route('gallery'));\n }\n"
+                },
+                {
+                    "date": 1726930483365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new Gallery();\n+    $gallery = new News();\n \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n"
+                },
+                {
+                    "date": 1726930489297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,11 +21,11 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new News();\n+    $news = new News();\n \n-    $gallery->headline = $request->headline;\n+    $news->headline = $request->headline;\n     $gallery->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n"
+                },
+                {
+                    "date": 1726930499675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,15 +24,15 @@\n     {\n     $news = new News();\n \n     $news->headline = $request->headline;\n-    $gallery->description = $request->description;\n+    $news->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n-        $gallery->img = '/images/' . $imageName;\n+        $news->img = '/images/' . $imageName;\n     } else {\n         // Set a default value or handle the absence of an image\n         $gallery->img = null; // or set a default image path\n     }\n"
+                },
+                {
+                    "date": 1726930511683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,10 +33,11 @@\n         $image->move(public_path('images'), $imageName);\n         $news->img = '/images/' . $imageName;\n     } else {\n         // Set a default value or handle the absence of an image\n-        $gallery->img = null; // or set a default image path\n+        $news->img = null; // or set a default image path\n     }\n \n-    $gallery->save();\n-    return redirect(route('gallery'));\n+    $news->save();\n+    return redirect(route('news'));\n }\n+}\n"
+                },
+                {
+                    "date": 1726930667420,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,23 +21,32 @@\n \n \n     public function store(Request $request)\n     {\n-    $news = new News();\n-\n-    $news->headline = $request->headline;\n-    $news->description = $request->description;\n-\n-    if ($request->file('img')) {\n-        $image = $request->file('img');\n-        $imageName = time() . '.' . $image->getClientOriginalExtension();\n-        $image->move(public_path('images'), $imageName);\n-        $news->img = '/images/' . $imageName;\n-    } else {\n-        // Set a default value or handle the absence of an image\n-        $news->img = null; // or set a default image path\n+        $news = new News();\n+    \n+        $news->headline = $request->headline;\n+        $news->description = $request->description;\n+    \n+        // Handling the image upload\n+        if ($request->file('img')) {\n+            $image = $request->file('img');\n+            $imageName = time() . '.' . $image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+            $news->img = '/images/' . $imageName;\n+        } else {\n+            $news->img = null; // or set a default image path\n+        }\n+    \n+        // Handling the date\n+        if ($request->has('published_date')) {\n+            $news->published_date = $request->published_date;\n+        } else {\n+            $news->published_date = null; // or set a default date if needed\n+        }\n+    \n+        $news->save();\n+    \n+        return redirect(route('news'));\n     }\n-\n-    $news->save();\n-    return redirect(route('news'));\n+    \n }\n-}\n"
+                },
+                {
+                    "date": 1726931125057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n         $news = new News();\n     \n         $news->headline = $request->headline;\n         $news->description = $request->description;\n+        c:\\xampp\\htdocs\\example-app\\app\\Http\\Controllers\\TaskController.php\n     \n         // Handling the image upload\n         if ($request->file('img')) {\n             $image = $request->file('img');\n"
+                },
+                {
+                    "date": 1726931150266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,33 +21,23 @@\n \n \n     public function store(Request $request)\n     {\n-        $news = new News();\n-    \n-        $news->headline = $request->headline;\n-        $news->description = $request->description;\n-        c:\\xampp\\htdocs\\example-app\\app\\Http\\Controllers\\TaskController.php\n-    \n-        // Handling the image upload\n-        if ($request->file('img')) {\n-            $image = $request->file('img');\n-            $imageName = time() . '.' . $image->getClientOriginalExtension();\n-            $image->move(public_path('images'), $imageName);\n-            $news->img = '/images/' . $imageName;\n-        } else {\n-            $news->img = null; // or set a default image path\n-        }\n-    \n-        // Handling the date\n-        if ($request->has('published_date')) {\n-            $news->published_date = $request->published_date;\n-        } else {\n-            $news->published_date = null; // or set a default date if needed\n-        }\n-    \n-        $news->save();\n-    \n-        return redirect(route('news'));\n+    $gallery = new Gallery();\n+\n+    $gallery->headline = $request->headline;\n+    $gallery->description = $request->description;\n+\n+    if ($request->file('img')) {\n+        $image = $request->file('img');\n+        $imageName = time() . '.' . $image->getClientOriginalExtension();\n+        $image->move(public_path('images'), $imageName);\n+        $gallery->img = '/images/' . $imageName;\n+    } else {\n+        // Set a default value or handle the absence of an image\n+        $gallery->img = null; // or set a default image path\n     }\n+\n+    $gallery->save();\n+    return redirect(route('gallery'));\n     \n }\n"
+                },
+                {
+                    "date": 1726931159065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new Gallery();\n+    $gallery = new News();\n \n     $gallery->headline = $request->headline;\n     $gallery->description = $request->description;\n \n@@ -38,6 +38,7 @@\n     }\n \n     $gallery->save();\n     return redirect(route('gallery'));\n+}\n     \n }\n"
+                },
+                {
+                    "date": 1726931166159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,11 +21,11 @@\n \n \n     public function store(Request $request)\n     {\n-    $gallery = new News();\n+    $news = new News();\n \n-    $gallery->headline = $request->headline;\n+    $news->headline = $request->headline;\n     $gallery->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n"
+                },
+                {
+                    "date": 1726931173445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,18 +24,18 @@\n     {\n     $news = new News();\n \n     $news->headline = $request->headline;\n-    $gallery->description = $request->description;\n+    $news->description = $request->description;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n         $image->move(public_path('images'), $imageName);\n-        $gallery->img = '/images/' . $imageName;\n+        $news->img = '/images/' . $imageName;\n     } else {\n         // Set a default value or handle the absence of an image\n-        $gallery->img = null; // or set a default image path\n+        $news->img = null; // or set a default image path\n     }\n \n     $gallery->save();\n     return redirect(route('gallery'));\n"
+                },
+                {
+                    "date": 1726931194806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,9 @@\n     $news = new News();\n \n     $news->headline = $request->headline;\n     $news->description = $request->description;\n+    $tasks->date = $request->input('date');\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n@@ -36,9 +37,9 @@\n         // Set a default value or handle the absence of an image\n         $news->img = null; // or set a default image path\n     }\n \n-    $gallery->save();\n-    return redirect(route('gallery'));\n+    $news->save();\n+    return redirect(route('news'));\n }\n     \n }\n"
+                },
+                {
+                    "date": 1726931201297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     $news = new News();\n \n     $news->headline = $request->headline;\n     $news->description = $request->description;\n-    $tasks->date = $request->input('date');\n+    $news->date = $request->input('date');\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n"
+                },
+                {
+                    "date": 1726931209946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     $news = new News();\n \n     $news->headline = $request->headline;\n     $news->description = $request->description;\n-    $news->date = $request->input('date');\n+    $news->date = $request->date');\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n"
+                },
+                {
+                    "date": 1726931329850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     $news = new News();\n \n     $news->headline = $request->headline;\n     $news->description = $request->description;\n-    $news->date = $request->date');\n+    $news->date = $request->date;\n \n     if ($request->file('img')) {\n         $image = $request->file('img');\n         $imageName = time() . '.' . $image->getClientOriginalExtension();\n@@ -39,7 +39,7 @@\n     }\n \n     $news->save();\n     return redirect(route('news'));\n-}\n+    }\n     \n }\n"
+                },
+                {
+                    "date": 1726931342649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,6 +40,15 @@\n \n     $news->save();\n     return redirect(route('news'));\n     }\n+\n+\n     \n+    public function edit( string $id)\n+    {\n+        $gallery = Gallery::find($id); \n+        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+\n+    }\n+    \n }\n"
+                },
+                {
+                    "date": 1726931347962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n \n     \n     public function edit( string $id)\n     {\n-        $gallery = Gallery::find($id); \n+        $gallery = News::find($id); \n         return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n \n     }\n     \n"
+                },
+                {
+                    "date": 1726931355961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,10 +45,10 @@\n \n     \n     public function edit( string $id)\n     {\n-        $gallery = News::find($id); \n-        return view(\"admin.gallery.edit\", ['gallery'=>$gallery]);\n+        $news = News::find($id); \n+        return view(\"admin.news.edit\", ['gallery'=>$gallery]);\n \n     }\n     \n }\n"
+                },
+                {
+                    "date": 1726931516027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,31 @@\n     \n     public function edit( string $id)\n     {\n         $news = News::find($id); \n-        return view(\"admin.news.edit\", ['gallery'=>$gallery]);\n+        return view(\"admin.news.edit\", ['news'=>$news]);\n \n     }\n+\n+\n+\n+    public function update(Request $request, string $id)\n+    {\n+        $gallery = Gallery::find($id);\n+        $gallery->headline = $request->headline;\n+        $gallery->description = $request->description;\n+\n+        if ($request->hasFile('img')) {\n+            $image = $request->file('img');\n+            $imageName = time() . '.' . $image->getClientOriginalExtension();\n+            $image->move(public_path('images'), $imageName);\n+            $gallery->img = '/images/' . $imageName;\n+        } else {\n+            // If no new image is uploaded, retain the existing image\n+            $gallery->img = $gallery->img; // Keep the existing image path\n+        }\n+\n+        $gallery->save();\n+        return redirect(route('gallery'));\n+    }\n     \n }\n"
+                },
+                {
+                    "date": 1726931521994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,9 +54,9 @@\n \n \n     public function update(Request $request, string $id)\n     {\n-        $gallery = Gallery::find($id);\n+        $gallery = News::find($id);\n         $gallery->headline = $request->headline;\n         $gallery->description = $request->description;\n \n         if ($request->hasFile('img')) {\n"
+                },
+                {
+                    "date": 1726931528281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     public function update(Request $request, string $id)\n     {\n         $news = News::find($id);\n         $news->headline = $request->headline;\n-        $gallery->description = $request->description;\n+        $news->description = $request->description;\n \n         if ($request->hasFile('img')) {\n             $image = $request->file('img');\n             $imageName = time() . '.' . $image->getClientOriginalExtension();\n"
+                }
+            ],
+            "date": 1726925144937,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\Admin;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass NewsandblogContoller extends Controller\n{\n    public fu\n}\n"
+        }
+    ]
+}
